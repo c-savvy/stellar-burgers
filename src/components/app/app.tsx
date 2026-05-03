@@ -24,9 +24,7 @@ import {
   selectIngredientsError,
   selectIngredientsLoading
 } from '../../services/slices/ingredientsSlice';
-import {
-  checkUserAuth
-} from '../../services/slices/userSlice';
+import { checkUserAuth } from '../../services/slices/userSlice';
 import { TIngredient } from '@utils-types';
 import { useDispatch, useSelector } from '../../services/store';
 
@@ -40,7 +38,6 @@ const App = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const closeModal = () => navigate(-1);
-
 
   const background = location.state?.background;
 
@@ -58,9 +55,7 @@ const App = () => {
     <div className={styles.app}>
       <AppHeader />
 
-
       <Routes location={background || location}>
-
         <Route
           path='/'
           element={
@@ -89,7 +84,6 @@ const App = () => {
         <Route path='/feed' element={<Feed />} />
         <Route path='*' element={<NotFound404 />} />
 
-        
         <Route element={<ProtectedRoute onlyUnAuth />}>
           <Route path='/login' element={<Login />} />
           <Route path='/register' element={<Register />} />
@@ -104,10 +98,8 @@ const App = () => {
         </Route>
       </Routes>
 
-
       {background && (
         <Routes>
-
           <Route
             path='/ingredients/:id'
             element={

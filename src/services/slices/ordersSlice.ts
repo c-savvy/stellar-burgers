@@ -103,7 +103,6 @@ export const ordersSlice = createSlice({
   name: 'orders',
   initialState,
   reducers: {
-
     setNewOrder: (state, action) => {
       state.orderRequest = action.payload;
       state.newOrder.order = null;
@@ -195,7 +194,6 @@ export const ordersSlice = createSlice({
     selectUserOrders: (state) => state.userOrders
   }
 });
-
 
 export const {
   selectFeedOrders,
