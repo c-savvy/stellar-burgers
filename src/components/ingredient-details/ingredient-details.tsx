@@ -7,7 +7,8 @@ import { selectIngredients } from '../../services/slices/ingredientsSlice';
 
 export const IngredientDetails: FC = () => {
   /** TODO: взять переменную из стора */
-  const id = String(Object.values(useParams()));
+  const params = useParams<{ id: string }>();
+  const id = params.id || '';
 
   const ingredientData = useSelector(selectIngredients).find(
     (ingredient) => ingredient._id === id

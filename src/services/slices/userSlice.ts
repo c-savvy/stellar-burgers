@@ -37,13 +37,14 @@ export const registerUserThunk = createAsyncThunk(
   async (newUserData: TRegisterData, { rejectWithValue }) => {
     try {
       const response = await registerUserApi(newUserData);
-      return {
-        user: response.user,
-        accessToken: response.accessToken,
-        refreshToken: response.refreshToken
-      };
-    } catch (err: any) {
-      return rejectWithValue(err.message || 'Ошибка регистрации');
+
+      setCookie('accessToken', response.accessToken);
+      localStorage.setItem('refreshToken', response.refreshToken);
+
+      return { user: response.user };
+    } catch (err) {
+      const error = err as { message: string };
+      return rejectWithValue(error.message || 'Ошибка регистрации');
     }
   }
 );
@@ -53,13 +54,14 @@ export const loginUserThunk = createAsyncThunk(
   async (loginData: TLoginData, { rejectWithValue }) => {
     try {
       const response = await loginUserApi(loginData);
-      return {
-        user: response.user,
-        accessToken: response.accessToken,
-        refreshToken: response.refreshToken
-      };
-    } catch (err: any) {
-      return rejectWithValue(err.message || 'Ошибка входа');
+
+      setCookie('accessToken', response.accessToken);
+      localStorage.setItem('refreshToken', response.refreshToken);
+
+      return { user: response.user };
+    } catch (err) {
+      const error = err as { message: string };
+      return rejectWithValue(error.message || 'Ошибка входа');
     }
   }
 );
@@ -70,8 +72,9 @@ export const updateUserThunk = createAsyncThunk(
     try {
       const response = await updateUserApi(userPartialData);
       return { user: response.user };
-    } catch (err: any) {
-      return rejectWithValue(err.message || 'Ошибка обновления');
+    } catch (err) {
+      const error = err as { message: string };
+      return rejectWithValue(error.message || 'Ошибка обновления');
     }
   }
 );
@@ -80,9 +83,14 @@ export const logoutUserThunk = createAsyncThunk(
   'user/logout',
   async (_, { rejectWithValue }) => {
     try {
-      return await logoutApi();
-    } catch (err: any) {
-      return rejectWithValue(err.message || 'Ошибка выхода из системы');
+      await logoutApi();
+
+      setCookie('accessToken', '', { expires: -1 });
+      localStorage.removeItem('refreshToken');
+      return null;
+    } catch (err) {
+      const error = err as { message: string };
+      return rejectWithValue(error.message || 'Ошибка выхода из системы');
     }
   }
 );
@@ -97,7 +105,8 @@ export const checkUserAuth = createAsyncThunk(
       const response = await getUserApi();
       // Extract only the plain user object
       return response.user;
-    } catch (error: any) {
+    } catch (err) {
+      const error = err as { message: string };
       return rejectWithValue(error.message || 'Failed to check auth');
     }
   }
@@ -128,8 +137,7 @@ export const userSlice = createSlice({
       .addCase(registerUserThunk.fulfilled, (state, action) => {
         state.loading = false;
         state.user = action.payload.user;
-        setCookie('accessToken', action.payload.accessToken);
-        localStorage.setItem('refreshToken', action.payload.refreshToken);
+
         state.isAuthChecked = true;
       })
       .addCase(registerUserThunk.rejected, (state, action) => {
@@ -143,8 +151,7 @@ export const userSlice = createSlice({
       .addCase(loginUserThunk.fulfilled, (state, action) => {
         state.loading = false;
         state.user = action.payload.user;
-        setCookie('accessToken', action.payload.accessToken);
-        localStorage.setItem('refreshToken', action.payload.refreshToken);
+
         state.isAuthChecked = true;
       })
       .addCase(loginUserThunk.rejected, (state, action) => {
@@ -170,8 +177,6 @@ export const userSlice = createSlice({
       .addCase(logoutUserThunk.fulfilled, (state, action) => {
         state.loading = false;
         state.user = null;
-        setCookie('accessToken', '', { expires: -1 });
-        localStorage.removeItem('refreshToken');
       })
       .addCase(logoutUserThunk.rejected, (state, action) => {
         state.loading = false;

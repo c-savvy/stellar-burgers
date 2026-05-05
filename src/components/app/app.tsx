@@ -32,7 +32,7 @@ const App = () => {
   /** TODO: взять переменные из стора */
   const isIngredientsLoading = useSelector(selectIngredientsLoading);
   const ingredients: TIngredient[] = useSelector(selectIngredients);
-  const error = useSelector(selectIngredientsError);
+  const error = useSelector(selectIngredientsError) as string | null;
 
   const dispatch = useDispatch();
   const location = useLocation();

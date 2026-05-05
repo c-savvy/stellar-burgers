@@ -19,8 +19,9 @@ export const getIngredientsThunk = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       return await getIngredientsApi();
-    } catch (err: any) {
-      return rejectWithValue(err.message || 'Ошибка загрузки ингредиентов');
+    } catch (err) {
+      const error = err as { message: string };
+      return rejectWithValue(error.message || 'Ошибка загрузки ингредиентов');
     }
   }
 );

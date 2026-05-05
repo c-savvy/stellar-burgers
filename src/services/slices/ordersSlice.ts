@@ -14,9 +14,10 @@ export const fetchUserOrders = createAsyncThunk(
     try {
       // getOrdersApi() returns TOrder[] directly
       return await getOrdersApi();
-    } catch (err: any) {
+    } catch (err) {
+      const error = err as { message: string };
       return rejectWithValue(
-        err.message || 'Ошибка загрузки заказов пользователя'
+        error.message || 'Ошибка загрузки заказов пользователя'
       );
     }
   }
@@ -31,8 +32,9 @@ export const createOrderThunk = createAsyncThunk(
         order: response.order,
         name: response.name
       };
-    } catch (err: any) {
-      return rejectWithValue(err.message || 'Ошибка создания заказа');
+    } catch (err) {
+      const error = err as { message: string };
+      return rejectWithValue(error.message || 'Ошибка создания заказа');
     }
   }
 );
@@ -43,8 +45,9 @@ export const fetchOrderByNumber = createAsyncThunk(
     try {
       const response = await getOrderByNumberApi(orderNumber);
       return { orders: response.orders };
-    } catch (err: any) {
-      return rejectWithValue(err.message || 'Ошибка получения заказа');
+    } catch (err) {
+      const error = err as { message: string };
+      return rejectWithValue(error.message || 'Ошибка получения заказа');
     }
   }
 );
@@ -60,8 +63,9 @@ export const getFeedsThunk = createAsyncThunk(
         total: response.total,
         totalToday: response.totalToday
       };
-    } catch (err: any) {
-      return rejectWithValue(err.message || 'Ошибка загрузки ленты');
+    } catch (err) {
+      const error = err as { message: string };
+      return rejectWithValue(error.message || 'Ошибка загрузки ленты');
     }
   }
 );

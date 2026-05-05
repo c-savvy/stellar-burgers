@@ -1,7 +1,7 @@
 import { FC, useEffect, useMemo } from 'react';
 import { Preloader } from '../ui/preloader';
 import { OrderInfoUI } from '../ui/order-info';
-import { TIngredient } from '@utils-types';
+import { TIngredient, TOrder } from '@utils-types';
 import { useDispatch, useSelector } from '../../services/store';
 import {
   fetchOrderByNumber,
@@ -12,10 +12,10 @@ import { selectIngredients } from '../../services/slices/ingredientsSlice';
 
 export const OrderInfo: FC = () => {
   /** TODO: взять переменные orderData и ingredients из стора */
-  const orderData = useSelector(selectOrderByNumber);
+  const orderData = useSelector(selectOrderByNumber) as TOrder | null;
 
-  const { numberStr } = useParams<{ numberStr: string }>();
-  const orderNumber = Number(numberStr);
+  const { number } = useParams<{ number: string }>();
+  const orderNumber = Number(number);
 
   const dispatch = useDispatch();
   useEffect(() => {

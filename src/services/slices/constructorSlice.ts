@@ -41,7 +41,7 @@ export const constructorSlice = createSlice({
 
     removeIngredient: (state, action) => {
       state.ingredients = state.ingredients.filter(
-        (ing) => ing._id !== action.payload
+        (ing) => ing.id !== action.payload
       );
     },
 
