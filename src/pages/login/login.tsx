@@ -10,8 +10,8 @@ import { Preloader } from '@ui';
 
 export const Login: FC = () => {
   const dispatch = useDispatch();
-  const [email, setEmail] = useState('test123@test.com');
-  const [password, setPassword] = useState('testpassword');
+  const [email, setEmail] = useState('palimpsestov@test.com');
+  const [password, setPassword] = useState('schlorpmyburgersir');
   const loading = useSelector(selectUserLoading);
   const error = useSelector(selectUserError);
 

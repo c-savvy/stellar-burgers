@@ -1,0 +1,20 @@
+{
+  "success": true,
+  "name": "Краторный био-марсианский бургер",
+  "order": {
+    "ingredients": [],
+    "_id": "12345",
+    "owner": {
+      "name": "Piramidov",
+      "email": "palimpsestov@test.com",
+      "createdAt": "",
+      "updatedAt": ""
+    },
+    "status": "done",
+    "name": "Краторный био-марсианский бургер",
+    "createdAt": "",
+    "updatedAt": "",
+    "number": 67890,
+    "price": 1234
+  }
+}

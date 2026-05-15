@@ -1,0 +1,9 @@
+{
+  "success": true,
+  "accessToken": "mockAccessToken",
+  "refreshToken": "mockRefreshToken",
+  "user": {
+    "email": "palimpsestov@test.com",
+    "name": "Piramidov"
+  }
+}
