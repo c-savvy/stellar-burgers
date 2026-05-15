@@ -61,7 +61,7 @@ type TIngredientsResponse = TServerResponse<{
   data: TIngredient[];
 }>;
 
-type TFeedsResponse = TServerResponse<{
+export type TFeedsResponse = TServerResponse<{
   orders: TOrder[];
   total: number;
   totalToday: number;
@@ -107,6 +107,7 @@ type TOwner = {
 };
 
 type TNewOrder = {
+  ingredients: never[];
   _id: string;
   status: string;
   name: string;
