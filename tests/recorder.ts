@@ -5,7 +5,6 @@ import { chromium } from 'playwright';
   const context = await browser.newContext();
   const page = await context.newPage();
 
-  // Navigate first to set tokens
   await page.goto('http://localhost:4000');
 
   await page.evaluate(() => {
@@ -20,7 +19,6 @@ import { chromium } from 'playwright';
     }
   ]);
 
-  // Now record HAR with auth in place
   await page.routeFromHAR('./tests/hars/api.har', {
     url: '**/api/**',
     update: true,
@@ -28,7 +26,6 @@ import { chromium } from 'playwright';
     updateContent: 'embed'
   });
 
-  // Reload so auth check returns authenticated user
   await page.reload();
   await page.waitForTimeout(3000);
 
@@ -46,5 +43,5 @@ import { chromium } from 'playwright';
 
   await context.close();
   await browser.close();
-  console.log('Done!');
+
 })();
