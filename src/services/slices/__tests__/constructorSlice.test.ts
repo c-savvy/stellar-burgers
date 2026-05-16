@@ -71,24 +71,24 @@ describe('constructorSlice', () => {
   });
 
   it('меняет местами ингредиенты', () => {
-  const withIngredients = constructorSlice.reducer(
-    initialState,
-    constructorSlice.actions.addIngredient(mockIngredient)
-  );
-  const secondIngredient = { ...mockIngredient, _id: 'ing2', name: 'Second' };
-  const withTwo = constructorSlice.reducer(
-    withIngredients,
-    constructorSlice.actions.addIngredient(secondIngredient)
-  );
+    const withIngredients = constructorSlice.reducer(
+      initialState,
+      constructorSlice.actions.addIngredient(mockIngredient)
+    );
+    const secondIngredient = { ...mockIngredient, _id: 'ing2', name: 'Second' };
+    const withTwo = constructorSlice.reducer(
+      withIngredients,
+      constructorSlice.actions.addIngredient(secondIngredient)
+    );
 
-  const state = constructorSlice.reducer(
-    withTwo,
-    constructorSlice.actions.swapIngredient({ first: 0, second: 1 })
-  );
+    const state = constructorSlice.reducer(
+      withTwo,
+      constructorSlice.actions.swapIngredient({ first: 0, second: 1 })
+    );
 
-  expect(state.ingredients[0]._id).toBe('ing2');
-  expect(state.ingredients[1]._id).toBe('ing1');
-});
+    expect(state.ingredients[0]._id).toBe('ing2');
+    expect(state.ingredients[1]._id).toBe('ing1');
+  });
 
   it('удаляет бургер', () => {
     const withBun = constructorSlice.reducer(

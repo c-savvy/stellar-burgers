@@ -5,9 +5,9 @@ import { chromium } from 'playwright';
   const context = await browser.newContext();
   const page = await context.newPage();
 
-  // Navigate first to set tokens
-  await page.goto('http://localhost:4000');
+  const BASE = 'http://localhost:4000';
 
+  await page.goto(BASE);
   await page.evaluate(() => {
     localStorage.setItem('refreshToken', 'mockRefreshToken');
   });
@@ -20,7 +20,6 @@ import { chromium } from 'playwright';
     }
   ]);
 
-  // Now record HAR with auth in place
   await page.routeFromHAR('./tests/hars/api.har', {
     url: '**/api/**',
     update: true,
@@ -28,8 +27,13 @@ import { chromium } from 'playwright';
     updateContent: 'embed'
   });
 
-  // Reload so auth check returns authenticated user
   await page.reload();
+  await page.waitForTimeout(3000);
+
+  await page.goto(`${BASE}/login`);
+  await page.locator('input[type="email"]').fill('leroy@graverobbi.ng');
+  await page.locator('input[type="password"]').fill('password');
+  await page.locator('button', { hasText: 'Войти' }).click();
   await page.waitForTimeout(3000);
 
   const addButtons = page.locator('button', { hasText: 'Добавить' });
@@ -46,5 +50,5 @@ import { chromium } from 'playwright';
 
   await context.close();
   await browser.close();
-  console.log('Done!');
+  console.log('HAR!');
 })();

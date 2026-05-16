@@ -84,7 +84,10 @@ describe('userSlice', () => {
     expect(state.isAuthChecked).toBe(true);
   });
 
-  const mockLoginData = { email: 'palimpsestov@test.com', password: 'schlorpmyburgersir' };
+  const mockLoginData = {
+    email: 'palimpsestov@test.com',
+    password: 'schlorpmyburgersir'
+  };
 
   it('устанавливает loading=true при начале входа', () => {
     const state = userSlice.reducer(
