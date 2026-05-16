@@ -30,7 +30,7 @@ export const DefaultFeedInfo: Story = {
         }
       ],
       total: 12,
-      totalToday: 2,
+      totalToday: 2
       // isLoading: false,
       // error: null
     },
